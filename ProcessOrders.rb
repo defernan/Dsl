@@ -49,6 +49,46 @@ class ProcessOrders
   end
 end
 
+class ActionsManager
+  include Singleton
+  
+  def initialize
+
+  end
+
+  def packing_slip(dept)
+    puts "---- Packing slip for #{dept}"
+  end
+
+  def activate
+    puts "---- Activating membership"
+  end
+
+  def email(recipient)
+    puts "---- Emailing #{recipient}"
+  end
+
+  def notify(recipient)
+    puts "---- Notifying #{recipient}"
+  end
+
+  def pay(who)
+    puts "---- Paying #{who}"
+  end
+
+  def include_free(what)
+    puts "---- Including free #{what}"
+  end
+
+  def include_discount
+    puts "---- Including discount coupon"
+  end
+
+  def warranty
+    puts "---- Adding warranty"
+  end
+end
+
 class Product
   attr_reader :name, :actions
    
@@ -63,17 +103,10 @@ class Product
   end
  
   def perform_actions
-    @actions.each{ |action| puts action }
+    @actions.each{ |action|  
+      ActionsManager.instance.instance_eval(action)
+    }
   end
-end
-
-class Actions
-  include Singleton
-  
-  def run_methods(methods)
-
-  end
-  
 end
 
 =begin
@@ -84,7 +117,7 @@ def product(text)
 end
 
 def packing_slip(text)
-  action = "packing_slip(#{text})"
+  action = "packing_slip('#{text}')"
   ProcessOrders.instance.add_action(action)
 end
 
@@ -95,24 +128,24 @@ def activate
 end
 
 def email(text)
-  action = "email(#{text})"
+  action = "email('#{text}')"
   ProcessOrders.instance.add_action(action)
 
 end
 
 def notify(text)
-  action = "notify(#{text})"
+  action = "notify('#{text}')"
   ProcessOrders.instance.add_action(action)
 
 end
 
 def pay(text)
-  action = "pay(#{text})"
+  action = "pay('#{text}')"
   ProcessOrders.instance.add_action(action)
 end
 
 def include_free(text)
-  action = "include_free(#{text})"
+  action = "include_free('#{text}')"
   ProcessOrders.instance.add_action(action)
 end
 
