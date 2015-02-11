@@ -1,0 +1,22 @@
+product 'book'
+packing_slip 'shipping'
+packing_slip 'royalty'
+
+product 'membership'
+activate
+email 'purchaser'
+notify 'ski resort'
+
+product 'book'
+pay 'commission'
+
+product 'ski video'
+pay 'commission'
+packing_slip 'shipping'
+include_free 'first aid video'
+
+product 'ski boots'
+include_discount
+
+product 'ski helmet'
+warranty
