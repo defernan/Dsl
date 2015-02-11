@@ -22,12 +22,15 @@ class ProcessOrders
     @products[@current_product].actions = action
   end
 
-  #exception
+  #use for error checking if valid product typed
   def determine_valid_product(product)
+    valid = true
     if @products.has_key?(product)
-      product
+      valid
     else
-      #throw error
+      puts "Undefined product: #{product}"
+      puts ""
+      valid = false
     end
   end
   
@@ -44,11 +47,14 @@ class ProcessOrders
     print "Enter product type or 'quit' to end: "
     product = gets.chomp
     if(product == "quit")
-      
+      #do nothing 
     else
       #determine if valid
-      determine_valid_product product
-      process_order product
+      if(determine_valid_product(product))
+        #process order 
+        process_order product
+      end
+      #recall 
       run_process_orders
     end
   end
@@ -60,6 +66,11 @@ class ActionsManager
   include Singleton
   
   def initialize
+
+  end
+  
+  #use for error checking in rules file
+  def determine_valid_action
 
   end
 
