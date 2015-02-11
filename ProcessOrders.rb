@@ -31,24 +31,31 @@ class ProcessOrders
     end
   end
   
-  def process_order
-    print "Enter product type or 'quit' to end: "
-    product = gets.chomp
-    determine_valid_product(product)
-    
+  def process_order(product)
     puts ""
-    
       
     puts @products[product].name
     @products[product].perform_actions
-  
+    
+    puts ""
   end
 
   def run_process_orders
-
+    print "Enter product type or 'quit' to end: "
+    product = gets.chomp
+    if(product == "quit")
+      
+    else
+      #determine if valid
+      determine_valid_product product
+      process_order product
+      run_process_orders
+    end
   end
 end
-
+=begin
+Actions manager class used to evaluate valid actions and perform actions
+=end
 class ActionsManager
   include Singleton
   
@@ -89,6 +96,9 @@ class ActionsManager
   end
 end
 
+=begin
+Product class used to store associated actions with a product
+=end
 class Product
   attr_reader :name, :actions
    
@@ -161,4 +171,4 @@ end
 
 load 'businessRules.txt'
 
-ProcessOrders.instance.process_order
+ProcessOrders.instance.run_process_orders
