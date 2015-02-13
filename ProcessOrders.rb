@@ -1,5 +1,13 @@
-
 require 'singleton'
+
+class DSLError < ScriptError
+	attr_reader :object
+	
+	def initialize(command)
+		@command = command
+	end
+
+end
 
 class ProcessOrders
   include Singleton
@@ -179,7 +187,24 @@ def warranty
   action = "warranty"
   ProcessOrders.instance.add_action(action)
 end
-
-load 'businessRules.txt'
-
+if __FILE__ == $0
+	begin
+		load 'C:\Users\Isaac\Desktop\Desktop\School\Mines\Spring2015\ProgrammingLanguages\DSL\Dsl\businessRules.txt'
+	rescue NameError => e
+		errorString = e.message.scan(/`.*'/).to_s
+	
+		puts "\nAction in rules file is not defined: #{errorString[3..(errorString.length)-4]}"
+		puts "Aborting..."
+		puts
+		puts "Please contact tech support for more assistance"
+		exit
+	rescue ArgumentError => e
+		wrong_arguments = e.backtrace[0].scan(/`.*'/).to_s
+		puts "\n#{wrong_arguments[3..(wrong_arguments.length)-4]} requires more arguments"
+		puts "Aborting..."
+		puts
+		puts "Please contact tech support for more assistance"
+		exit
+	end
 ProcessOrders.instance.run_process_orders
+end

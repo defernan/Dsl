@@ -1,9 +1,9 @@
-product 
+product 'book'
 packing_slip 'shipping'
 packing_slip 'royalty'
 
 product 'membership'
-activate
+activiate
 email 'purchaser'
 notify 'ski resort'
 
