@@ -189,7 +189,7 @@ def warranty
 end
 if __FILE__ == $0
 	begin
-		load 'C:\Users\Isaac\Desktop\Desktop\School\Mines\Spring2015\ProgrammingLanguages\DSL\Dsl\businessRules.txt'
+		load 'businessRules.txt'
 	rescue NameError => e
 		errorString = e.message.scan(/`.*'/).to_s
 	
